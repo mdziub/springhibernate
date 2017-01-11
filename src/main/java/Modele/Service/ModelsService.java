@@ -34,6 +34,60 @@ class ModelsService implements IModelsManager {
                 .save(category);
     }
 
+    @Override
+    public List<Category> getAllCategories() {
+        return null;
+    }
+
+    @Override
+    public Category findByIdCategory(Long id) {
+        return null;
+    }
+
+    @Override
+    public Category findByNazwa(String nazwa) {
+        return null;
+    }
+
+    @Override
+    public void deleteCategory(Category category) {
+
+    }
+
+    @Override
+    public Long addModel(Model model) {
+        return null;
+    }
+
+    @Override
+    public List<Model> getAllModels() {
+        return null;
+    }
+
+    @Override
+    public Model findByIdModel(Long id) {
+        return null;
+    }
+
+    @Override
+    public Model findByProd(String prod) {
+        return null;
+    }
+
+    @Override
+    public void deleteModel(Model model) {
+
+    }
+
+    @Override
+    public List<Model> getAllCategoryModel(Long idCategory) {
+        return null;
+    }
+
+    @Override
+    public void addCategoryToModel(Long idCategory, Long idModel) {
+
+    }
 
 
 }
