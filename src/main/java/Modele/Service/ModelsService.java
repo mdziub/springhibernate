@@ -77,22 +77,35 @@ class ModelsService implements IModelsManager {
 
     @Override
     public Long addModel(Model model) {
-        return null;
+        model.setId(null);
+        return (Long) sessionFactory.getCurrentSession()
+                .save(model);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Model> getAllModels() {
-        return null;
+        return sessionFactory
+                .getCurrentSession()
+                .getNamedQuery("model.all")
+                .list();
     }
 
     @Override
     public Model findByIdModel(Long id) {
-        return null;
+        return (Model) sessionFactory
+                .getCurrentSession()
+                .get(Model.class,id);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Model findByProd(String prod) {
-        return null;
+        return (Model) sessionFactory
+                .getCurrentSession()
+                .getNamedQuery("model.byProd")
+                .setString("prod",prod)
+                .uniqueResult();
     }
 
     @Override
