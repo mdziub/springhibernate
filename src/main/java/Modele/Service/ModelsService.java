@@ -35,22 +35,43 @@ class ModelsService implements IModelsManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Category> getAllCategories() {
-        return null;
+        return sessionFactory
+                .getCurrentSession()
+                .getNamedQuery("category.all")
+                .list();
     }
 
     @Override
     public Category findByIdCategory(Long id) {
-        return null;
+        return (Category) sessionFactory
+                .getCurrentSession()
+                .get(Category.class,id);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Category findByNazwa(String nazwa) {
-        return null;
+        return (Category) sessionFactory
+                .getCurrentSession()
+                .getNamedQuery("category.byNazwa")
+                .setString("name",nazwa)
+                .uniqueResult();
     }
 
     @Override
     public void deleteCategory(Category category) {
+        category = (Category) sessionFactory.getCurrentSession()
+                .get(Category.class,category.getId());
+        //fetchtype lazy here
+        if(category.getModels()!=null)
+            for (Model model:category.getModels()){
+                model.setCategory(null);
+                sessionFactory.getCurrentSession().update(model);
+
+            }
+        sessionFactory.getCurrentSession().delete(category);
 
     }
 
