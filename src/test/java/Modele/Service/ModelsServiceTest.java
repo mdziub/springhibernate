@@ -75,19 +75,50 @@ public class ModelsServiceTest {
 
     @Test
     public void findByIdCategory() throws Exception {
-
-    }
-
-    @Test
-    public void findByNazwa() throws Exception {
+        Category puzzle=new Category();
+        puzzle.setNazwaKat(randomString);
+        puzzle.setNumer(1234);
+        puzzle.setOpis("jajebie");
+        Long id=modelsManager.addCategory(puzzle);
+        assertEquals(randomString,modelsManager.findByIdCategory(id).getNazwaKat());
 
     }
 
     @Test
     public void deleteCategory() throws Exception {
 
-    }
+        Category puzzle=new Category();
+        puzzle.setNazwaKat(randomString);
+        puzzle.setNumer(1234);
+        puzzle.setOpis("jajebie");
+        Long idC=modelsManager.addCategory(puzzle);
 
+        Model owcaCwel=new Model();
+        owcaCwel.setNazwaMod("asdasdsad");
+        owcaCwel.setProducent(randomString);
+        owcaCwel.setProgram("sadsda");
+        owcaCwel.setCategory(puzzle);
+        Long idM= modelsManager.addModel(owcaCwel);
+        //usuwanie kategorii
+        modelsManager.deleteCategory(puzzle);
+        boolean ifExists=false;
+        try {
+            //oczekujemu ze znajdziemy rekord i pole nazwa kat bedzie miala taka sama wartosc jaka wprowadzilismy
+            assertTrue(modelsManager.findByIdCategory(idC).getNazwaKat()==randomString);
+        }catch (NullPointerException e)
+        {
+            ifExists=true;
+        }
+        assertTrue(ifExists);
+        //sprawdzamy czy po usunieciu kategorii model ktory byl do niej przypisany  nadal jest
+        //jesli chcesz zeby zostal usuiety to trzeba zmienic tym cascade z persist na all
+        assertEquals(randomString,
+                modelsManager
+                        .findByIdModel(idM)
+                        .getProducent());
+
+
+    }
     @Test
     public void addModel() throws Exception {
 
