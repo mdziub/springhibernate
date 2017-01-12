@@ -22,13 +22,27 @@ import static org.junit.Assert.*;
 @TransactionConfiguration(transactionManager = "txManager", defaultRollback = false)
 @Transactional
 public class ModelsServiceTest {
-    @Test
-    public void getSessionFactory() throws Exception {
 
+
+    private String randomString="";
+
+    @Autowired
+    private IModelsManager modelsManager;
+
+    @Before
+    public void setUp() throws Exception {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        randomString= sb.toString();
     }
 
-    @Test
-    public void setSessionFactory() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
     }
 
