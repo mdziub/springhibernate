@@ -63,6 +63,14 @@ public class ModelsServiceTest {
     @Test
     public void getAllCategories() throws Exception {
 
+        Category puzzle=new Category();
+        puzzle.setNazwaKat(randomString);
+        puzzle.setNumer(1234);
+        puzzle.setOpis("Wspanialosci");
+        modelsManager.addCategory(puzzle);
+        List<Category> categories=modelsManager.getAllCategories();
+
+        assertTrue(categories.size()>=1);
     }
 
     @Test
