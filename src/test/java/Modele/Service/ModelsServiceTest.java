@@ -48,6 +48,15 @@ public class ModelsServiceTest {
 
     @Test
     public void addCategory() throws Exception {
+        Category puzzle=new Category();
+        puzzle.setNazwaKat(randomString);
+        puzzle.setNumer(1234);
+        puzzle.setOpis("Pieknosci");
+        modelsManager.addCategory(puzzle);
+        assertEquals(puzzle.getNazwaKat(),
+                modelsManager
+                        .findByNazwa(puzzle.getNazwaKat())
+                        .getNazwaKat());
 
     }
 
