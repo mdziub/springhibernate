@@ -108,19 +108,37 @@ class ModelsService implements IModelsManager {
                 .uniqueResult();
     }
 
+
+
     @Override
     public void deleteModel(Model model) {
-
+        model = (Model) sessionFactory
+                .getCurrentSession()
+                .get(Model.class,model.getId());
+        sessionFactory.getCurrentSession().delete(model);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Model> getAllCategoryModel(Long idCategory) {
-        return null;
+        Category category = (Category) sessionFactory.getCurrentSession()
+                .get(Category.class, idCategory);
+        List<Model> allCategoryModel=new ArrayList<>();
+        allCategoryModel=sessionFactory.getCurrentSession()
+                .getNamedQuery("model.byCategory")
+                .setLong("category",idCategory)
+                .list();
+
+        return allCategoryModel;
     }
 
     @Override
     public void addCategoryToModel(Long idCategory, Long idModel) {
-
+        Model model = (Model) sessionFactory.getCurrentSession()
+                .get(Model.class, idModel);
+        Category category = (Category) sessionFactory.getCurrentSession()
+                .get(Category.class, idCategory);
+        model.setCategory(category);
     }
 
 
