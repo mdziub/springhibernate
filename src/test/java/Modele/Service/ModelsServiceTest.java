@@ -78,7 +78,7 @@ public class ModelsServiceTest {
         Category puzzle=new Category();
         puzzle.setNazwaKat(randomString);
         puzzle.setNumer(1234);
-        puzzle.setOpis("jajebie");
+        puzzle.setOpis("Opisik");
         Long id=modelsManager.addCategory(puzzle);
         assertEquals(randomString,modelsManager.findByIdCategory(id).getNazwaKat());
 
@@ -90,15 +90,15 @@ public class ModelsServiceTest {
         Category puzzle=new Category();
         puzzle.setNazwaKat(randomString);
         puzzle.setNumer(1234);
-        puzzle.setOpis("jajebie");
+        puzzle.setOpis("Dobroci");
         Long idC=modelsManager.addCategory(puzzle);
 
-        Model owcaCwel=new Model();
-        owcaCwel.setNazwaMod("asdasdsad");
-        owcaCwel.setProducent(randomString);
-        owcaCwel.setProgram("sadsda");
-        owcaCwel.setCategory(puzzle);
-        Long idM= modelsManager.addModel(owcaCwel);
+        Model m1=new Model();
+        m1.setNazwaMod("Wielgasny");
+        m1l.setProducent(randomString);
+        m1.setProgram("Najnowszy");
+        m1.setCategory(puzzle);
+        Long idM= modelsManager.addModel(m1);
         //usuwanie kategorii
         modelsManager.deleteCategory(puzzle);
         boolean ifExists=false;
@@ -119,24 +119,50 @@ public class ModelsServiceTest {
 
 
     }
-    @Test
+@Test
     public void addModel() throws Exception {
+        Model m1=new Model();
+        m1.setNazwaMod("Wspanialy");
+        m1.setProducent(randomString);
+        m1.setProgram("Wyborny");
 
+        Long idM= modelsManager.addModel(m1);
+        //test znajdowania modelu po id
+        assertEquals(randomString,
+                modelsManager
+                        .findByIdModel(idM)
+                            .getProducent());
     }
 
     @Test
     public void getAllModels() throws Exception {
-
+        Model m1=new Model();
+        m1.setNazwaMod("Ladny");
+        m1.setProducent(randomString);
+        m1.setProgram("Nowy");
+        setUp();
+        Model m2=new Model();
+        m2.setNazwaMod("Ladniejszy");
+        m2.setProducent(randomString);
+        m2.setProgram("Nowszy");
+        modelsManager.addModel(m1);
+        modelsManager.addModel(m2);
+        List<Model> models=modelsManager.getAllModels();
+        assertTrue(models.size()>=2);
     }
 
-    @Test
-    public void findByIdModel() throws Exception {
-
-    }
 
     @Test
     public void findByProd() throws Exception {
 
+        Model m2=new Model();
+        m2.setNazwaMod("asdasdsad");
+        m2.setProducent(randomString);
+        m2.setProgram("sadsda");
+        modelsManager.addModel(m2);
+        assertEquals(randomString,modelsManager
+                                    .findByProd(m2.getProducent())
+                                        .getProducent());
     }
 
     @Test
